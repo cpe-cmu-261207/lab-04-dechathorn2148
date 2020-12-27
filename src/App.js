@@ -6,17 +6,121 @@ function App() {
 
   const [myCourses, setMyCourse] = useState([]);
   const [inputData, setInputData] = useState([]);
-  const [GPA, setGPA] = useState(4.0);
+  const [AllGrade, setGPA] = useState(4.0);
 
   /**
    * Calculate the GPA of current courses
    * @returns the GPA of current courses
    */
-  function calculateGPA() {
+  const calculateGPA = () => {
     // TODO 
-    console.log(myCourses)
-    setGPA(GPA)
-  }
+    if(myCourses.length === 0){
+      return 0;
+    }
+    let AllGrade = 0;
+    let AllCredit = 0;
+    for(var i = 0; i < myCourses.length; i++){
+      if (myCourses[i].GradeSubject === "A"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (4*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (4*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (4*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "B+"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (3.5*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (3.5*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (3.5*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "B"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (3*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (3*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (3*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "C+"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (2.5*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (2*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (2.5*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "C"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (2*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (2*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (2*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "D+"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (1.5*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (1.5*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (1.5*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "D"){
+        if (myCourses[i].CreditSubject === "1"){
+          AllGrade = AllGrade + (1*1);
+        }
+        if (myCourses[i].CreditSubject === "2"){
+          AllGrade = AllGrade + (1*2);
+        }
+        if (myCourses[i].CreditSubject === "3"){
+          AllGrade = AllGrade + (1*3);
+        }
+      }
+      if (myCourses[i].GradeSubject === "F"){
+        AllGrade = AllGrade + 0;
+      }
+      if (myCourses[i].GradeSubject === "W"){
+        AllGrade = AllGrade + 0;
+      }
+    }
+
+    for(var j = 0; j < myCourses.length; j++){
+      if (myCourses[j].GradeSubject !== "W"){
+        if (myCourses[j].CreditSubject === "1"){
+          AllCredit = AllCredit + 1;
+        }
+        if (myCourses[j].CreditSubject === "2"){
+          AllCredit = AllCredit + 2;
+        }
+        if (myCourses[j].CreditSubject === "3"){
+          AllCredit = AllCredit + 3;
+        }
+      }
+    }    
+
+    return AllGrade/AllCredit;
+  };
 
   /**
    * Should be called when a course is to be added to the list.
@@ -24,7 +128,6 @@ function App() {
    * @param {*} event
    */
   function addCourse(event) {
-    
     event.preventDefault();
     // TODO
     const Credit = document.querySelector('#CreditSubject').value
@@ -32,7 +135,7 @@ function App() {
     const Course = document.querySelector('#NameSubject').value
     const ID = document.querySelector('#IDSubject').value
     setMyCourse([...myCourses, {Date: Date.now(), key: myCourses.length, NameSubject: Course, IDSubject: ID , GradeSubject: Grade, CreditSubject: Credit}])
-   
+
     // recalculate GPA
     calculateGPA();
   }
@@ -116,7 +219,7 @@ function App() {
           Grade = {Courses.GradeSubject} Credit = {Courses.CreditSubject} onCompleteClick = {(e) => onDeleteCourse(e)} />) }
       </div>
       { <Input />}
-      { <Output GPA = {GPA} />}
+      { <Output GPA = {calculateGPA()} />}
     </div>
   );
 }
